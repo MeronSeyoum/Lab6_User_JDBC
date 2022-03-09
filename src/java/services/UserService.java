@@ -8,6 +8,7 @@ import dataaccess.UserDB;
 import java.beans.*;
 import java.io.Serializable;
 import java.util.List;
+import models.Role;
 import models.User;
 
 /**
@@ -28,13 +29,13 @@ public class UserService  {
         return users;
     }
     
-    public void insert(String email, int active, String first_name, String last_name, String password, int role) throws Exception {
+    public void insert(String email, boolean active, String first_name, String last_name, String password, Role role) throws Exception {
         User user = new User(email, active, first_name, last_name, password, role);
         UserDB userDB = new UserDB();
         userDB.insert(user);
     }
     
-    public void update(String email, int active, String first_name, String last_name, String password, int role) throws Exception {
+    public void update(String email, boolean active, String first_name, String last_name, String password, Role role) throws Exception {
         User user = new User(email, active, first_name, last_name, password, role);
         UserDB userDB = new UserDB();
         userDB.update(user);

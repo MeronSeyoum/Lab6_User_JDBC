@@ -9,12 +9,36 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <link rel="stylesheet"   type="text/css" href="Style/user.css">
         <title>Manage Users</title>
     </head>
     <body>
-        ${message}
-        <c:forEach items="${users}" var="user">
-               ${user.first_name}<br>
+       ${message} 
+        <h1>Manage Users</h1>
+        <table>
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>First Name</th>
+                 <th>Last Name</th>
+                <th>active</th>
+                <th>Role</th>
+                <th colspan=2>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach items="${users}" var="user">
+                <tr>
+                    <td><c:out value="${user.email}" /></td>
+                    <td><c:out value="${user.first_name}" /></td>
+                    <td><c:out value="${user.last_name}" /></td>
+                    <td><c:out value="${user.active = true ? 'Y' : 'N'}" /></td>
+                    <td>${user.getRole().getRole_name()}</td>
+                    <td><a href="UserServlet?action=update&email=<c:out value="${user.email}"/>">Update</a></td>
+                    <td><a href="UserServlet?action=delete&email=<c:out value="${user.email}"/>">Delete</a></td>
+                </tr>
             </c:forEach>
+        </tbody>
+    </table>
     </body>
 </html>
