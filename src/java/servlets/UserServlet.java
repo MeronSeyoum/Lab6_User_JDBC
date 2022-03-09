@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author merya
+ * @author Meron Seyoum
  */
 public class UserServlet extends HttpServlet {
 
