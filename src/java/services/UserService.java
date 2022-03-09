@@ -14,8 +14,8 @@ import models.User;
  *
  * @author Meron Seyoum
  */
-public class UserService {
-    
+public class UserService  {
+      
  public User get(String email) throws Exception {
         UserDB userDB = new UserDB();
         User user = userDB.get(email);
