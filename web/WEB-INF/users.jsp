@@ -9,11 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-         <link rel="stylesheet"   type="text/css" href="Style/user.css">
+         <link rel="stylesheet"   type="text/css" href="Style/User.css">
         <title>Manage Users</title>
     </head>
     <body>
        ${message} 
+   <div  class="main">  
+       <div class="inner">
         <h1>Manage Users</h1>
         <table>
         <thead>
@@ -40,5 +42,7 @@
             </c:forEach>
         </tbody>
     </table>
+       </div>
+   </div>
     </body>
 </html>
