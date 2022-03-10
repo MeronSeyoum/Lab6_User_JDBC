@@ -16,45 +16,29 @@
             {
                 document.getElementById('add').style = "display: block;";
             }
-
+            function unhideEditUser()
+            {
+                var url = window.location.href;
+                if (url !== "http://localhost:8080/User" || url !== "http://127.0.0.1:8080/User")
+                {
+                    document.getElementById('edit').style = "display: block;";
+                }
+            }
         </script>
     </head>
-    <body>
-        <%-- display all user in a table--%>
+    <body onLoad='unhideEditUser()'>
+
+
         <div  class="main">  
             <div class="inner">
                 <h1>Manage Users</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>active</th>
-                            <th>Role</th>
-                            <th colspan=2>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${users}" var="user">
-                            <tr>
-                                <td><c:out value="${user.email}" /></td>
-                                <td><c:out value="${user.first_name}" /></td>
-                                <td><c:out value="${user.last_name}" /></td>
-                                <td><c:out value="${user.active = true ? 'Y' : 'N'}" /></td>
-                                <td><c:out value="${user.getRole().getRole_name()}" /></td>
-                                <td><a href="UserServlet?action=update&email=<c:out value="${user.email}"/>">Update</a></td>
-                                <td><a href="UserServlet?action=delete&email=<c:out value="${user.email}"/>">Delete</a></td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                <%-- form to add new users--%>
+
                 <div class="msg" > ${message}  </div>
                 <button type="submit" onClick='unhideAddUser()'>Create A New User</button>
+                <%-- form to add new users--%>
                 <div style='display: none;' id="add" class="add">
                     <h2>Add New User</h2>
-                    <form action="User" method="post">
+                    <form action="User" method="post">    
                         <label for="email"> Email</label> 
                         <input type="text" name="email" value=""><br>
                         <label for="First_name"> First Name</label> 
@@ -74,9 +58,68 @@
                         </Select><br>
                         <input type="hidden" name="action" value="add">
                         <button type="submit"> Add User</button>
+
                     </form>
                 </div>
 
+
+                <%-- display all user in a table--%>   
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>active</th>
+                            <th>Role</th>
+                            <th colspan=2>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${users}" var="user">
+                            <tr>
+                                <td><c:out value="${user.email}" /></td>
+                                <td><c:out value="${user.first_name}" /></td>
+                                <td><c:out value="${user.last_name}" /></td>
+                                <td><c:out value="${user.active = true ? 'Y' : 'N'}" /></td>
+                                <td><c:out value="${user.getRole().getRole_name()}" /></td>
+                                <td><a href="User?action=viewEdit&amp;email=<c:out value="${user.email}" />" >Edit</a></td>
+
+                                <td><a href="User?action=delete&email=<c:out value="${user.email}"/>">Delete</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+
+                <%-- form to edit existing users--%>
+
+                <div style='display: none;' id="edit">
+                    
+                    <form action="User" method="post">
+                        <c:if test="${selectedUser ne null}">
+                          <h2>Edit User</h2> 
+                          <label for="email"> Email</label> 
+                            <input type="text" name="email" value="${selectedUser.email}" readonly><br>
+                            <label for="First_name"> First Name</label> 
+                            <input type="text" name="first_name" value="${selectedUser.first_name}"><br>
+                            <label for="last_name"> Last Name</label> 
+                            <input type="text" name="last_name" value="${selectedUser.last_name}"><br>
+                            <label for="password"> password</label> 
+                            <input type="text" name="password" value="${selectedUser.password}"><br>
+                            <label for="active"> Active</label>
+                            <input type="checkbox" name="active" value="${selectedUser.active}" checked>
+                            <br><br>
+                            <label for="email"> role</label> 
+                            <Select id="role" name="role">
+                                <option value="1">System Admin</option>
+                                <option value="2">Regular User</option>
+                                <option value="3">Company Admin</option>
+                            </Select><br>
+                            <input type="hidden" name="action" value="edit">
+                            <button type="submit"> Edit User</button>
+                        </c:if> 
+                    </form>
+                </div>
             </div>
         </div>
     </body>

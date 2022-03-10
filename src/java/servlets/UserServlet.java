@@ -13,10 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import models.Role;
 import models.User;
-import services.RoleService;
 import services.UserService;
 
 /**
@@ -45,6 +43,17 @@ public class UserServlet extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("message", ex);
+        }
+
+        String action = request.getParameter("action");
+        if (action != null && action.equals("viewEdit")) {
+            try {
+                String email = request.getParameter("email");
+                User user = userservice.get(email);
+                request.setAttribute("selectedUser", user);
+            } catch (Exception ex) {
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
@@ -83,13 +92,19 @@ public class UserServlet extends HttpServlet {
 
         if (actions.equals("add")) {
             try {
-
                 userservice.insert(email, Boolean.parseBoolean(active), first_name, last_name, password, roles);
                 request.setAttribute("message", "User " + first_name + " Successfully Added");
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+        } else if (actions.equals("edit")) {
+            try {
+                userservice.update(email, Boolean.parseBoolean(active), first_name, last_name, password, roles);
+                request.setAttribute("message", "User " + first_name + " Successfully Updated");
+            } catch (Exception ex) {
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         try {
             List<User> users = userservice.getAll();

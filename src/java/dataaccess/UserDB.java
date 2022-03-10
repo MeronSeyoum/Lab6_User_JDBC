@@ -36,10 +36,11 @@ public class UserDB {
                 String first_name = rs.getString(3);
                 String last_name = rs.getString(4);
                 String password = rs.getString(5);
+                int role_id = rs.getInt(7);
+                String role_name = rs.getString(8);
                
-                String role_name = rs.getString(6);
- int role_id = rs.getInt(7);
                 Role role = new Role(role_id, role_name);
+
                 User user = new User(email, active, first_name, last_name, password, role);
                 users.add(user);
             }
@@ -65,13 +66,12 @@ public class UserDB {
             ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
-                boolean active = rs.getBoolean(2);
-                String first_name = rs.getString(3);
-                String last_name = rs.getString(4);
-                String password = rs.getString(5);
-              
-int role_id = rs.getInt(6);
-                String role_name = rs.getString(7);
+                boolean active = rs.getBoolean("active");
+                String first_name = rs.getString("first_name");
+                String last_name = rs.getString("last_name");
+                String password = rs.getString("password");
+                int role_id = rs.getInt("role_id");
+                String role_name = rs.getString("role_name");
 
                 Role role = new Role(role_id, role_name);
                 user = new User(email, active, first_name, last_name, password, role);
