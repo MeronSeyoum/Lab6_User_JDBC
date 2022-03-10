@@ -64,29 +64,18 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
 
         UserService userservice = new UserService();
-
-try {
-            List<User> users = userservice.getAll();
-            request.setAttribute("users", users);
-        } catch (Exception ex) {
-            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("message", ex);
-        }
-
-
-
-        RoleService roleservice = new RoleService();
+        // RoleService roleservice = new RoleService();
         Role roles = null;
+
         String actions = request.getParameter("action");
         String email = request.getParameter("email");
         String first_name = request.getParameter("first_name");
         String last_name = request.getParameter("last_name");
         String password = request.getParameter("password");
-        String active = request.getParameter("active");
+        String active = (request.getParameter("active") == null) ? "0" : "1";
         int role_id = Integer.parseInt(request.getParameter("role"));
 
         try {
-
             roles = new Role(role_id);
         } catch (Exception ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,11 +83,21 @@ try {
 
         if (actions.equals("add")) {
             try {
+
                 userservice.insert(email, Boolean.parseBoolean(active), first_name, last_name, password, roles);
+                request.setAttribute("message", "User " + first_name + " Successfully Added");
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
- getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+
         }
+        try {
+            List<User> users = userservice.getAll();
+            request.setAttribute("users", users);
+        } catch (Exception ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+        getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
     }
 }
