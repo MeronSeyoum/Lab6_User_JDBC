@@ -13,7 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import models.Role;
 import models.User;
+import services.RoleService;
 import services.UserService;
 
 /**
@@ -22,7 +25,6 @@ import services.UserService;
  */
 public class UserServlet extends HttpServlet {
 
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -35,7 +37,7 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         UserService userservice = new UserService();
+        UserService userservice = new UserService();
 
         try {
             List<User> users = userservice.getAll();
@@ -46,7 +48,7 @@ public class UserServlet extends HttpServlet {
         }
 
         getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
-   
+
     }
 
     /**
@@ -60,9 +62,43 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        UserService userservice = new UserService();
+
+try {
+            List<User> users = userservice.getAll();
+            request.setAttribute("users", users);
+        } catch (Exception ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", ex);
+        }
+
+
+
+        RoleService roleservice = new RoleService();
+        Role roles = null;
+        String actions = request.getParameter("action");
+        String email = request.getParameter("email");
+        String first_name = request.getParameter("first_name");
+        String last_name = request.getParameter("last_name");
+        String password = request.getParameter("password");
+        String active = request.getParameter("active");
+        int role_id = Integer.parseInt(request.getParameter("role"));
+
+        try {
+
+            roles = new Role(role_id);
+        } catch (Exception ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (actions.equals("add")) {
+            try {
+                userservice.insert(email, Boolean.parseBoolean(active), first_name, last_name, password, roles);
+            } catch (Exception ex) {
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+ getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+        }
     }
-
-   
-
 }

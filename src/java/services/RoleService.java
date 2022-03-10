@@ -4,13 +4,23 @@
  */
 package services;
 
+import dataaccess.RoleDB;
 import java.beans.*;
 import java.io.Serializable;
+import java.util.List;
+import models.Role;
 
 /**
  *
  * @author Meron Seyoum
  */
 public class RoleService {
-    
+
+    private RoleDB roleDB = new RoleDB();
+
+    public List<Role> getAll() throws Exception {
+        List<Role> roles = roleDB.getAll();
+        return roles;
+    }
+
 }

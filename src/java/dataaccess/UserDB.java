@@ -36,9 +36,9 @@ public class UserDB {
                 String first_name = rs.getString(3);
                 String last_name = rs.getString(4);
                 String password = rs.getString(5);
-                int role_id = rs.getInt(6);
-                String role_name = rs.getString(7);
-
+               
+                String role_name = rs.getString(6);
+ int role_id = rs.getInt(7);
                 Role role = new Role(role_id, role_name);
                 User user = new User(email, active, first_name, last_name, password, role);
                 users.add(user);
@@ -98,7 +98,7 @@ int role_id = rs.getInt(6);
             ps.setString(3, user.getFirst_name());
             ps.setString(4, user.getLast_name());
             ps.setString(5, user.getPassword());
-            ps.setInt(5, user.getRole().getRole_id());
+            ps.setInt(6, user.getRole().getRole_id());
             ps.executeUpdate();
         } finally {
             DBUtil.closePreparedStatement(ps);
