@@ -14,6 +14,7 @@
         <script>
             function unhideAddUser()
             {
+                document.getElementById('edit').style = "display: none;";
                 document.getElementById('add').style = "display: block;";
             }
             function unhideEditUser()
@@ -21,6 +22,7 @@
                 var url = window.location.href;
                 if (url !== "http://localhost:8080/User" || url !== "http://127.0.0.1:8080/User")
                 {
+                    document.getElementById('add').style = "display: none;";
                     document.getElementById('edit').style = "display: block;";
                 }
             }
@@ -62,7 +64,6 @@
                     </form>
                 </div>
 
-
                 <%-- display all user in a table--%>   
                 <table>
                     <thead>
@@ -81,24 +82,22 @@
                                 <td><c:out value="${user.email}" /></td>
                                 <td><c:out value="${user.first_name}" /></td>
                                 <td><c:out value="${user.last_name}" /></td>
-                                <td><c:out value="${user.active = true ? 'Y' : 'N'}" /></td>
+                                <td><c:out value="${(user.active == '1') ? 'N' : 'Y'}" /></td>
                                 <td><c:out value="${user.getRole().getRole_name()}" /></td>
-                                <td><a href="User?action=viewEdit&amp;email=<c:out value="${user.email}" />" >Edit</a></td>
-
-                                <td><a href="User?action=delete&email=<c:out value="${user.email}"/>">Delete</a></td>
+                                <td><a href="User?action=viewEdit&amp;email=${user.email.replace("+","%2B")}" >Edit</a></td>
+                                <td><a href="User?action=delete&email=${user.email.replace("+","%2B")}">Delete</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-
+                
                 <%-- form to edit existing users--%>
-
                 <div style='display: none;' id="edit">
-                    
+
                     <form action="User" method="post">
                         <c:if test="${selectedUser ne null}">
-                          <h2>Edit User</h2> 
-                          <label for="email"> Email</label> 
+                            <h2>Edit User</h2> 
+                            <label for="email"> Email</label> 
                             <input type="text" name="email" value="${selectedUser.email}" readonly><br>
                             <label for="First_name"> First Name</label> 
                             <input type="text" name="first_name" value="${selectedUser.first_name}"><br>
