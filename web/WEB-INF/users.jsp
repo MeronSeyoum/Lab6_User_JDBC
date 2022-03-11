@@ -24,6 +24,7 @@
                 {
                     document.getElementById('add').style = "display: none;";
                     document.getElementById('edit').style = "display: block;";
+                    
                 }
             }
         </script>
@@ -33,9 +34,7 @@
 
         <div  class="main">  
             <div class="inner">
-                <h1>Manage Users</h1>
-
-                <div class="msg" > ${message}  </div>
+                <h1>Manage Users</h1>   
                 <button type="submit" onClick='unhideAddUser()'>Create A New User</button>
                 <%-- form to add new users--%>
                 <div style='display: none;' id="add" class="add">
@@ -82,15 +81,15 @@
                                 <td><c:out value="${user.email}" /></td>
                                 <td><c:out value="${user.first_name}" /></td>
                                 <td><c:out value="${user.last_name}" /></td>
-                                <td><c:out value="${(user.active == '1') ? 'N' : 'Y'}" /></td>
+                                <td><c:out value="${(user.active == 'True') ? 'Y' : 'N'}" /></td>
                                 <td><c:out value="${user.getRole().getRole_name()}" /></td>
-                                <td><a href="User?action=viewEdit&amp;email=${user.email.replace("+","%2B")}" >Edit</a></td>
-                                <td><a href="User?action=delete&email=${user.email.replace("+","%2B")}">Delete</a></td>
+                                <td><a href="User?action=viewEdit&amp;email=${user.email.replace("+","%2B")}" >Edit</a></td>                           
+                               <td><a href="User?action=delete&email=${user.email.replace("+","%2B")}">Delete</a></td>                              
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-                
+                <div class="msg" > ${message}  </div>
                 <%-- form to edit existing users--%>
                 <div style='display: none;' id="edit">
 
@@ -105,8 +104,15 @@
                             <input type="text" name="last_name" value="${selectedUser.last_name}"><br>
                             <label for="password"> password</label> 
                             <input type="text" name="password" value="${selectedUser.password}"><br>
-                            <label for="active"> Active</label>
-                            <input type="checkbox" name="active" value="${selectedUser.active}" checked>
+                            <label for="active"> Active</label>                           
+                            <c:choose>
+                            <c:when test="${selectedUser.active eq 'True'}">
+                                <input type="checkbox" name="active"  checked> 
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="checkbox" name="active" >
+                                </c:otherwise>
+                            </c:choose>
                             <br><br>
                             <label for="email"> role</label> 
                             <Select id="role" name="role">
@@ -114,8 +120,10 @@
                                 <option value="2">Regular User</option>
                                 <option value="3">Company Admin</option>
                             </Select><br>
-                            <input type="hidden" name="action" value="edit">
-                            <button type="submit"> Edit User</button>
+                           
+                            <button type="submit" name="action" value="edit" id="editButton"> Edit User</button> 
+                            <button type="submit" name="action" value="delete" id="deleteButton" class="del">Delete</button>
+                           
                         </c:if> 
                     </form>
                 </div>

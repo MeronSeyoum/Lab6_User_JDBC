@@ -50,6 +50,10 @@ button{
     margin: 4px 2px;
     cursor: pointer;
 }
+.del 
+{
+    background-color: #ff0000 !important;
+}
 table, td, th {
     border: 1px solid #ddd;
     text-align: left;
@@ -70,10 +74,9 @@ label {
 }
 .msg {
   position: fixed;
-  top: 0;
-  left: 0;
+  text-align: center;
+  padding: 10px 5px;
   width: 100%;
   color: #4CAF50;
-  z-index: 999;
   height: 1.5em;
 }

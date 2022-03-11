@@ -46,7 +46,7 @@ public class UserServlet extends HttpServlet {
         }
 
         String action = request.getParameter("action");
-        if (action != null && action.equals("viewEdit")) {
+        if (action != null && (action.equals("viewEdit") || action.equals("delete")) ) {
             try {
                 String email = request.getParameter("email");
                 User user = userservice.get(email);
@@ -93,7 +93,7 @@ public class UserServlet extends HttpServlet {
         if (actions.equals("add")) {
             try {
                 userservice.insert(email, Boolean.parseBoolean(active), first_name, last_name, password, roles);
-                request.setAttribute("message", "User " + first_name + " Successfully Added");
+                request.setAttribute("message", "User " + first_name + " has Successfully Added");
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -101,7 +101,7 @@ public class UserServlet extends HttpServlet {
         } else if (actions.equals("edit")) {
             try {
                 userservice.update(email, Boolean.parseBoolean(active), first_name, last_name, password, roles);
-                request.setAttribute("message", "User " + first_name + " Successfully Updated");
+                request.setAttribute("message", "User " + first_name + " has been Successfully Updated");
             } catch (Exception ex) {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
