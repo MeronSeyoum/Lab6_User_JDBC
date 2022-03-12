@@ -117,7 +117,7 @@ public class UserServlet extends HttpServlet {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (actions.equals("cancle")){
-// on cancle display redirect to view
+// on cancle redirect to view
             try {
                 List<User> users = userservice.getAll();
                 request.setAttribute("users", users);
