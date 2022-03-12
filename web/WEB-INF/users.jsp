@@ -24,18 +24,19 @@
                 {
                     document.getElementById('add').style = "display: none;";
                     document.getElementById('edit').style = "display: block;";
-                    
                 }
             }
         </script>
     </head>
     <body onLoad='unhideEditUser()'>
-
-
+   <%-- Add user in a database one at a time--%>   
         <div  class="main">  
             <div class="inner">
-                <h1>Manage Users</h1>   
+              <div class="msg" > ${message}  </div> 
+              <h1>Manage Users</h1> 
+               
                 <button type="submit" onClick='unhideAddUser()'>Create A New User</button>
+              
                 <%-- form to add new users--%>
                 <div style='display: none;' id="add" class="add">
                     <h2>Add New User</h2>
@@ -59,7 +60,7 @@
                         </Select><br>
                         <input type="hidden" name="action" value="add">
                         <button type="submit"> Add User</button>
-
+                        <button type="submit" name="action" value="cancle" class="canc">Cancel</button>
                     </form>
                 </div>
 
@@ -84,15 +85,16 @@
                                 <td><c:out value="${(user.active == 'True') ? 'Y' : 'N'}" /></td>
                                 <td><c:out value="${user.getRole().getRole_name()}" /></td>
                                 <td><a href="User?action=viewEdit&amp;email=${user.email.replace("+","%2B")}" >Edit</a></td>                           
-                               <td><a href="User?action=delete&email=${user.email.replace("+","%2B")}">Delete</a></td>                              
+                                <td><a href="User?action=delete&email=${user.email.replace("+","%2B")}">Delete</a></td>                              
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-                <div class="msg" > ${message}  </div>
-                <%-- form to edit existing users--%>
+                 
+                
+              
+                 <%-- form to edit existing users--%>
                 <div style='display: none;' id="edit">
-
                     <form action="User" method="post">
                         <c:if test="${selectedUser ne null}">
                             <h2>Edit User</h2> 
@@ -106,8 +108,8 @@
                             <input type="text" name="password" value="${selectedUser.password}"><br>
                             <label for="active"> Active</label>                           
                             <c:choose>
-                            <c:when test="${selectedUser.active eq 'True'}">
-                                <input type="checkbox" name="active"  checked> 
+                                <c:when test="${selectedUser.active eq 'True'}">
+                                    <input type="checkbox" name="active"  checked> 
                                 </c:when>
                                 <c:otherwise>
                                     <input type="checkbox" name="active" >
@@ -120,13 +122,14 @@
                                 <option value="2">Regular User</option>
                                 <option value="3">Company Admin</option>
                             </Select><br>
-                           
-                            <button type="submit" name="action" value="edit" id="editButton"> Edit User</button> 
+
+                            <button type="submit" name="action" value="edit" id="editButton">Edit User</button> 
                             <button type="submit" name="action" value="delete" id="deleteButton" class="del">Delete</button>
-                           
+                            <button type="submit" name="action" value="cancle" class="canc">Cancel</button>
                         </c:if> 
                     </form>
                 </div>
+                
             </div>
         </div>
     </body>

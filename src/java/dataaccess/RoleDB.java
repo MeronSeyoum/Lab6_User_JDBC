@@ -4,8 +4,6 @@
  */
 package dataaccess;
 
-import java.beans.*;
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,8 +43,5 @@ public class RoleDB {
             cp.freeConnection(con);
         }
         return roles;
-    }
-   
-
-
+    }  
 }

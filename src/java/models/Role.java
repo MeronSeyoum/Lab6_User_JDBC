@@ -4,7 +4,6 @@
  */
 package models;
 
-import java.beans.*;
 import java.io.Serializable;
 
 /**
@@ -12,18 +11,18 @@ import java.io.Serializable;
  * @author Meron Seyoum
  */
 public class Role implements Serializable {
-    
-private int role_id ;
-private String role_name;
+
+    private int role_id;
+    private String role_name;
 
     public Role(int role_id, String role_name) {
         this.role_id = role_id;
         this.role_name = role_name;
     }
 
- public Role(int role_id) {
+    public Role(int role_id) {
         this.role_id = role_id;
-        
+
     }
 
     public int getRole_id() {
@@ -42,6 +41,4 @@ private String role_name;
         this.role_name = role_name;
     }
 
-
-   
 }
