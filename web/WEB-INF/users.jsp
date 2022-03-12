@@ -42,13 +42,13 @@
                     <h2>Add New User</h2>
                     <form action="User" method="post">    
                         <label for="email"> Email</label> 
-                        <input type="text" name="email" value=""><br>
+                        <input type="text" name="email" value="" required><br>
                         <label for="First_name"> First Name</label> 
-                        <input type="text" name="first_name" value=""><br>
+                        <input type="text" name="first_name" value="" required><br>
                         <label for="last_name"> Last Name</label> 
-                        <input type="text" name="last_name" value=""><br>
+                        <input type="text" name="last_name" value="" required><br>
                         <label for="password"> password</label> 
-                        <input type="text" name="password" value=""><br>
+                        <input type="text" name="password" value="" required><br>
                         <label for="active"> Active</label>
                         <input type="checkbox" name="active" value="1" checked>
                         <br><br>
@@ -58,8 +58,7 @@
                             <option value="2">Regular User</option>
                             <option value="3">Company Admin</option>
                         </Select><br>
-                        <input type="hidden" name="action" value="add">
-                        <button type="submit"> Add User</button>
+                        <button type="submit" name="action" value="add"> Add User</button>
                         <button type="submit" name="action" value="cancle" class="canc">Cancel</button>
                     </form>
                 </div>
@@ -101,11 +100,11 @@
                             <label for="email"> Email</label> 
                             <input type="text" name="email" value="${selectedUser.email}" readonly><br>
                             <label for="First_name"> First Name</label> 
-                            <input type="text" name="first_name" value="${selectedUser.first_name}"><br>
+                            <input type="text" name="first_name" value="${selectedUser.first_name}" required><br>
                             <label for="last_name"> Last Name</label> 
-                            <input type="text" name="last_name" value="${selectedUser.last_name}"><br>
+                            <input type="text" name="last_name" value="${selectedUser.last_name}" required><br>
                             <label for="password"> password</label> 
-                            <input type="text" name="password" value="${selectedUser.password}"><br>
+                            <input type="text" name="password" value="${selectedUser.password}" required><br>
                             <label for="active"> Active</label>                           
                             <c:choose>
                                 <c:when test="${selectedUser.active eq 'True'}">
